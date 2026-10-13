@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="170" class="eq" viewBox="0 0 220 170" aria-label="buret"><style>.svg-stroke{fill:none;stroke:#24465c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.svg-fill{fill:#bde5eb;stroke:#24465c;stroke-width:3}
+.svg-metal{fill:#dbe2e5;stroke:#425762;stroke-width:3}
+.svg-thin{fill:none;stroke:#24465c;stroke-width:2}
+.marks{stroke:#7a929f;stroke-width:1.2}</style><path class="svg-stroke" d="M102 12h17v118h-17zM110 130v25M91 130h38M110 130v-12"/><path class="svg-metal" d="M86 125h48v11H86z"/><path class="svg-stroke" d="M129 130h20M110 155l-5 8h10z"/><path class="marks" d="M102 24h8M102 34h13M102 44h8M102 54h13M102 64h8M102 74h13M102 84h8M102 94h13M102 104h8"/></svg>

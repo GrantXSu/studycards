@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="190" class="dia" viewBox="0 0 360 190" role="img" aria-label="Mystery molecule"><style>.dia .b{stroke:#1f2937;stroke-width:2;fill:none;stroke-linecap:round}
+.dia .thick{stroke:#1f2937;stroke-width:5;stroke-linecap:round}
+.dia .hl{stroke:#16a34a;stroke-width:5;stroke-linecap:round}
+.dia .tail{stroke:#374151;stroke-width:2.3;fill:none;stroke-linejoin:round;stroke-linecap:round}
+.dia .ring{stroke:#1f2937;stroke-width:2;fill:none;stroke-linejoin:round}
+.dia .ptr{stroke:#9ca3af;stroke-width:1.3;stroke-dasharray:3 3}
+.dia .hbond{stroke:#2563eb;stroke-width:1.6;stroke-dasharray:3 3}
+.dia .hbond2{stroke:#2563eb;stroke-width:2;stroke-dasharray:4 3}
+.dia .ss{stroke:#b45309;stroke-width:2.5;stroke-dasharray:4 3}
+.dia .hexa{stroke:#374151;stroke-width:1.2}
+.dia .chain{stroke:#374151;stroke-width:2;fill:none}
+.dia .pchain{stroke:#7c3aed;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.dia .backbone{stroke:#94a3b8;stroke-width:5}
+.dia .dnastr{stroke:#2563eb;stroke-width:3;fill:none}
+.dia .rnastr{stroke:#7c3aed;stroke-width:3;fill:none}
+.dia .bg{fill:#fff}
+.dia .water{fill:rgba(59,130,246,.08);stroke:#2563eb;stroke-width:2;stroke-dasharray:6 4}
+.dia text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+.dia .at{text-anchor:middle;dominant-baseline:central;font-weight:700}
+.dia .lab{dominant-baseline:central;font-size:13px;fill:#374151}
+.dia .num{dominant-baseline:central;font-size:12px;fill:#2563eb;font-weight:800;text-anchor:middle}
+.dia text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}</style><defs></defs><line class="b" x1="170.0" y1="88.0" x2="200.4" y2="110.1"/><line class="b" x1="200.4" y1="110.1" x2="188.8" y2="145.9"/><line class="b" x1="151.2" y1="145.9" x2="139.6" y2="110.1"/><line class="b" x1="139.6" y1="110.1" x2="170.0" y2="88.0"/><line class="thick" x1="188.8" y1="145.9" x2="151.2" y2="145.9"/><line class="b" x1="188.8" y1="145.9" x2="188.8" y2="177.9"/><line class="b" x1="151.2" y1="145.9" x2="151.2" y2="177.9"/><line class="b" x1="200.4" y1="110.1" x2="232.0" y2="94.0"/><polygon class="ring" points="282.8,43.3 258.6,57.3 258.6,85.3 282.8,99.3 307.1,85.3 307.1,57.3"/><polygon class="ring" points="258.6,57.3 232.0,48.6 215.5,71.3 232.0,94.0 258.6,85.3"/><line class="b" x1="299.3" y1="84.2" x2="285.8" y2="92.0"/><line class="b" x1="263.4" y1="79.2" x2="263.4" y2="63.5"/><line class="b" x1="231.5" y1="55.9" x2="222.2" y2="68.6"/><line class="b" x1="299.3" y1="58.4" x2="285.8" y2="50.6"/><line class="b" x1="282.8" y1="43.3" x2="282.8" y2="5.3"/><line class="b" x1="139.6" y1="110.1" x2="112.0" y2="90.0"/><rect class="bg" x="162.7" y="77.8" width="14.5" height="20.4" rx="4"/><text class="at" x="170.0" y="88.0" font-size="17"><tspan fill="#dc2626">O</tspan></text><rect class="bg" x="177.5" y="168.9" width="22.6" height="18.0" rx="4"/><text class="at" x="188.8" y="177.9" font-size="15"><tspan fill="#dc2626">O</tspan><tspan fill="#6b7280">H</tspan></text><rect class="bg" x="139.9" y="168.9" width="22.6" height="18.0" rx="4"/><text class="at" x="151.2" y="177.9" font-size="15"><tspan fill="#dc2626">O</tspan><tspan fill="#6b7280">H</tspan></text><rect class="bg" x="300.4" y="48.3" width="13.3" height="18.0" rx="4"/><text class="at" x="307.1" y="57.3" font-size="15"><tspan fill="#2563eb">N</tspan></text><rect class="bg" x="276.2" y="90.3" width="13.3" height="18.0" rx="4"/><text class="at" x="282.8" y="99.3" font-size="15"><tspan fill="#2563eb">N</tspan></text><rect class="bg" x="225.3" y="39.6" width="13.3" height="18.0" rx="4"/><text class="at" x="232.0" y="48.6" font-size="15"><tspan fill="#2563eb">N</tspan></text><rect class="bg" x="225.3" y="85.0" width="13.3" height="18.0" rx="4"/><text class="at" x="232.0" y="94.0" font-size="15"><tspan fill="#2563eb">N</tspan></text><rect class="bg" x="266.9" y="-3.7" width="31.9" height="18.0" rx="4"/><text class="at" x="282.8" y="5.3" font-size="15"><tspan fill="#2563eb">N</tspan><tspan fill="#6b7280">H₂</tspan></text><rect class="bg" x="80.8" y="81.0" width="50.5" height="18.0" rx="4"/><text class="at" x="106.0" y="90.0" font-size="15"><tspan fill="#6b7280">H</tspan><tspan fill="#dc2626">O</tspan><tspan fill="#111827">C</tspan><tspan fill="#6b7280">H₂</tspan></text></svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="170" class="eq" viewBox="0 0 220 170" aria-label="pipet"><style>.svg-stroke{fill:none;stroke:#24465c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.svg-fill{fill:#bde5eb;stroke:#24465c;stroke-width:3}
+.svg-metal{fill:#dbe2e5;stroke:#425762;stroke-width:3}
+.svg-thin{fill:none;stroke:#24465c;stroke-width:2}
+.marks{stroke:#7a929f;stroke-width:1.2}</style><path class="svg-stroke" d="M106 12h8v49c0 6 10 13 10 27s-8 20-10 24v43l-4 9-4-9v-43c-2-4-10-10-10-24s10-21 10-27z"/><path class="svg-fill" d="M100 84c0-9 5-15 10-19 5 4 10 10 10 19 0 9-4 14-10 19-6-5-10-10-10-19z"/></svg>

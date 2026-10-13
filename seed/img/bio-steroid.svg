@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="470" height="240" class="dia" viewBox="0 0 470 240" role="img" aria-label="Steroid: four fused rings"><style>.dia .b{stroke:#1f2937;stroke-width:2;fill:none;stroke-linecap:round}
+.dia .thick{stroke:#1f2937;stroke-width:5;stroke-linecap:round}
+.dia .hl{stroke:#16a34a;stroke-width:5;stroke-linecap:round}
+.dia .tail{stroke:#374151;stroke-width:2.3;fill:none;stroke-linejoin:round;stroke-linecap:round}
+.dia .ring{stroke:#1f2937;stroke-width:2;fill:none;stroke-linejoin:round}
+.dia .ptr{stroke:#9ca3af;stroke-width:1.3;stroke-dasharray:3 3}
+.dia .hbond{stroke:#2563eb;stroke-width:1.6;stroke-dasharray:3 3}
+.dia .hbond2{stroke:#2563eb;stroke-width:2;stroke-dasharray:4 3}
+.dia .ss{stroke:#b45309;stroke-width:2.5;stroke-dasharray:4 3}
+.dia .hexa{stroke:#374151;stroke-width:1.2}
+.dia .chain{stroke:#374151;stroke-width:2;fill:none}
+.dia .pchain{stroke:#7c3aed;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.dia .backbone{stroke:#94a3b8;stroke-width:5}
+.dia .dnastr{stroke:#2563eb;stroke-width:3;fill:none}
+.dia .rnastr{stroke:#7c3aed;stroke-width:3;fill:none}
+.dia .bg{fill:#fff}
+.dia .water{fill:rgba(59,130,246,.08);stroke:#2563eb;stroke-width:2;stroke-dasharray:6 4}
+.dia text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+.dia .at{text-anchor:middle;dominant-baseline:central;font-weight:700}
+.dia .lab{dominant-baseline:central;font-size:13px;fill:#374151}
+.dia .num{dominant-baseline:central;font-size:12px;fill:#2563eb;font-weight:800;text-anchor:middle}
+.dia text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}</style><defs></defs><polygon class="ring" points="110.0,94.0 141.2,112.0 141.2,148.0 110.0,166.0 78.8,148.0 78.8,112.0"/><polygon class="ring" points="172.4,94.0 203.5,112.0 203.5,148.0 172.4,166.0 141.2,148.0 141.2,112.0"/><polygon class="ring" points="203.5,40.0 234.7,58.0 234.7,94.0 203.5,112.0 172.4,94.0 172.4,58.0"/><polygon class="ring" points="234.7,58.0 268.9,46.8 290.1,76.0 268.9,105.2 234.7,94.0"/><line class="b" x1="78.8" y1="148.0" x2="45.0" y2="175.0"/><line class="b" x1="141.2" y1="112.0" x2="141.2" y2="88.0"/><line class="b" x1="234.7" y1="58.0" x2="234.7" y2="34.0"/><polyline class="b" points="290.1,76.0 311.8,70.4 329.3,84.3 350.9,78.7 368.4,92.6 390.0,87.0 407.5,100.9"/><rect class="bg" x="25.5" y="169.8" width="25.1" height="20.4" rx="4"/><text class="at" x="38.0" y="180.0" font-size="17"><tspan fill="#6b7280">H</tspan><tspan fill="#dc2626">O</tspan></text><text class="lab" x="235.0" y="20.0" style="text-anchor:middle;font-size:13px;font-weight:700;">Steroid = 4 FUSED rings (three 6-sided + one 5-sided)</text><text class="lab" x="235.0" y="205.0" style="text-anchor:middle;font-size:13px;">Example: cholesterol. Almost no O, no N, so it is a lipid.</text><text class="lab" x="235.0" y="223.0" style="text-anchor:middle;font-size:13px;">Cholesterol → estrogen and testosterone (sex hormones).</text></svg>

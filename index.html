@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>StudyCards</title>
+  <link rel="stylesheet" href="styles.css?v=1791521563">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="#/"><span class="mark">S</span><span class="word">StudyCards</span></a>
+    <label class="search">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search your sets and cards" autocomplete="off">
+    </label>
+    <a class="btn primary" href="#/new">+ Create</a>
+    <button class="ib" id="theme" title="Dark mode"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/></svg></button>
+  </header>
+  <main id="app"></main>
+  <input type="file" id="imgpick" accept="image/*" hidden>
+  <script src="seed.js?v=1791606500"></script>
+  <script src="app.js?v=1791606500"></script>
+</body>
+</html>

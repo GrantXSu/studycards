@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="170" class="eq" viewBox="0 0 220 170" aria-label="beaker"><style>.svg-stroke{fill:none;stroke:#24465c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.svg-fill{fill:#bde5eb;stroke:#24465c;stroke-width:3}
+.svg-metal{fill:#dbe2e5;stroke:#425762;stroke-width:3}
+.svg-thin{fill:none;stroke:#24465c;stroke-width:2}
+.marks{stroke:#7a929f;stroke-width:1.2}</style><path class="svg-stroke" d="M65 28h90M76 28v102c0 10 7 16 17 16h45c10 0 17-6 17-16V28"/><path class="svg-fill" d="M77 98h77v32c0 10-6 15-16 15H93c-10 0-16-5-16-15z"/><path class="marks" d="M83 55h18M83 70h12M83 85h18"/><path class="svg-stroke" d="M155 28l12 7-12 7"/></svg>

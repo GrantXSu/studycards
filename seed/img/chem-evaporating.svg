@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="170" class="eq" viewBox="0 0 220 170" aria-label="evaporating dish"><style>.svg-stroke{fill:none;stroke:#24465c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.svg-fill{fill:#bde5eb;stroke:#24465c;stroke-width:3}
+.svg-metal{fill:#dbe2e5;stroke:#425762;stroke-width:3}
+.svg-thin{fill:none;stroke:#24465c;stroke-width:2}
+.marks{stroke:#7a929f;stroke-width:1.2}</style><ellipse class="svg-stroke" cx="105" cy="75" rx="67" ry="18"/><path class="svg-stroke" d="M38 75c7 47 25 65 67 65s60-18 67-65M172 75l22-8"/><ellipse class="svg-fill" cx="105" cy="77" rx="60" ry="13"/></svg>

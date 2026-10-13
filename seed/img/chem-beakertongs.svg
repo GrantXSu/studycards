@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="170" class="eq" viewBox="0 0 220 170" aria-label="beaker tongs"><style>.svg-stroke{fill:none;stroke:#24465c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.svg-fill{fill:#bde5eb;stroke:#24465c;stroke-width:3}
+.svg-metal{fill:#dbe2e5;stroke:#425762;stroke-width:3}
+.svg-thin{fill:none;stroke:#24465c;stroke-width:2}
+.marks{stroke:#7a929f;stroke-width:1.2}</style><path class="svg-metal" d="M48 29l18-8 54 104-14 8zM172 29l-18-8-54 104 14 8z"/><circle class="svg-stroke" cx="110" cy="95" r="7"/><path class="svg-stroke" d="M105 132l-25 25M115 132l25 25"/></svg>
