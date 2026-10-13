@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="Helvetica, Arial, sans-serif">
+  <rect width="900" height="540" fill="#ffffff"/>
+  <text x="450" y="34" font-size="22" font-weight="bold" text-anchor="middle" fill="#222">Why it gets colder as you go up</text>
+
+  <!-- box 1: high altitude -->
+  <g transform="translate(40,70)">
+    <rect width="250" height="250" rx="8" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <text x="125" y="-10" font-size="16" font-weight="bold" text-anchor="middle" fill="#1565c0">HIGH UP (mountain top)</text>
+    <g fill="#1565c0">
+      <circle cx="60" cy="70" r="7"/><circle cx="190" cy="110" r="7"/><circle cx="110" cy="190" r="7"/>
+      <circle cx="200" cy="210" r="7"/><circle cx="50" cy="200" r="7"/>
+    </g>
+    <text x="125" y="280" font-size="15" text-anchor="middle" fill="#333">little air above &#8594; LOW pressure</text>
+    <text x="125" y="302" font-size="15" text-anchor="middle" fill="#333">few molecules, few collisions</text>
+    <text x="125" y="326" font-size="17" font-weight="bold" text-anchor="middle" fill="#1565c0">= COLD</text>
+  </g>
+
+  <!-- box 2: middle -->
+  <g transform="translate(325,70)">
+    <rect width="250" height="250" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2"/>
+    <text x="125" y="-10" font-size="16" font-weight="bold" text-anchor="middle" fill="#b8860b">MIDDLE</text>
+    <g fill="#b8860b">
+      <circle cx="50" cy="50" r="7"/><circle cx="130" cy="60" r="7"/><circle cx="200" cy="45" r="7"/>
+      <circle cx="80" cy="130" r="7"/><circle cx="170" cy="120" r="7"/><circle cx="210" cy="190" r="7"/>
+      <circle cx="40" cy="200" r="7"/><circle cx="120" cy="205" r="7"/><circle cx="160" cy="170" r="7"/>
+      <circle cx="60" cy="90" r="7"/>
+    </g>
+    <text x="125" y="280" font-size="15" text-anchor="middle" fill="#333">some air above</text>
+    <text x="125" y="302" font-size="15" text-anchor="middle" fill="#333">medium density</text>
+    <text x="125" y="326" font-size="17" font-weight="bold" text-anchor="middle" fill="#b8860b">= COOL</text>
+  </g>
+
+  <!-- box 3: sea level -->
+  <g transform="translate(610,70)">
+    <rect width="250" height="250" rx="8" fill="#ffebee" stroke="#c62828" stroke-width="2"/>
+    <text x="125" y="-10" font-size="16" font-weight="bold" text-anchor="middle" fill="#c62828">SEA LEVEL</text>
+    <g fill="#c62828">
+      <circle cx="30" cy="30" r="7"/><circle cx="75" cy="40" r="7"/><circle cx="120" cy="28" r="7"/><circle cx="170" cy="42" r="7"/><circle cx="220" cy="30" r="7"/>
+      <circle cx="45" cy="80" r="7"/><circle cx="100" cy="85" r="7"/><circle cx="150" cy="78" r="7"/><circle cx="200" cy="88" r="7"/>
+      <circle cx="30" cy="130" r="7"/><circle cx="80" cy="125" r="7"/><circle cx="130" cy="135" r="7"/><circle cx="180" cy="128" r="7"/><circle cx="225" cy="140" r="7"/>
+      <circle cx="50" cy="180" r="7"/><circle cx="105" cy="175" r="7"/><circle cx="155" cy="185" r="7"/><circle cx="205" cy="180" r="7"/>
+      <circle cx="30" cy="225" r="7"/><circle cx="80" cy="222" r="7"/><circle cx="130" cy="228" r="7"/><circle cx="180" cy="224" r="7"/><circle cx="225" cy="226" r="7"/>
+    </g>
+    <text x="125" y="280" font-size="15" text-anchor="middle" fill="#333">whole atmosphere above &#8594; HIGH pressure</text>
+    <text x="125" y="302" font-size="15" text-anchor="middle" fill="#333">many molecules, many collisions</text>
+    <text x="125" y="326" font-size="17" font-weight="bold" text-anchor="middle" fill="#c62828">= WARM</text>
+  </g>
+
+  <g font-size="14.5" fill="#222">
+    <text x="40" y="462">1) Gases are compressible; the more pressure you put on a gas, the denser it gets.</text>
+    <text x="40" y="488">2) The more atmosphere there is above you, the denser the gas around you.</text>
+    <text x="40" y="514">3) Thermal energy in a m&#179; depends on how many air molecules there are: fewer particles, fewer collisions, less heat transfer!</text>
+  </g>
+  <text x="450" y="428" font-size="13" text-anchor="middle" fill="#666">Each box = 1 m&#179; of air. Lapse rate: lose 5.5 &#176;F per 1,000 ft (dry air), 3.0 &#176;F per 1,000 ft (wet air).</text>
+</svg>
