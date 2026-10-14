@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Air &amp; Ocean Circulation — visual explainer</title>
+<link rel="stylesheet" href="../styles.css?v=1791521563">
+<style>
+.wrapx { max-width: 1180px; margin: 0 auto; padding: 16px 16px 80px; }
+.chap { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0 14px; }
+.chap button { border: 2px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 6px 13px; font: inherit; font-weight: 650; font-size: 14px; cursor: pointer; }
+.chap button.on { background: var(--pri); border-color: var(--pri); color: #fff; }
+.chap button.done:not(.on) { border-color: var(--ok); }
+@media (max-width: 640px) { .chap { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; } .chap button { flex: none; } .wrapx { padding: 10px 10px 60px; } .panel { padding: 14px; } }
+.stage { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 880px) { .stage { grid-template-columns: 1fr; } }
+.scene { background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; position: sticky; top: 72px; }
+@media (max-width: 880px) { .scene { position: static; } }
+.scene svg { display: block; width: 100%; height: auto; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 18px 20px; }
+.panel h2 { font-size: 20px; margin: 2px 0 10px; }
+.panel p { margin: 0 0 10px; }
+.panel ol, .panel ul { margin: 0 0 10px; padding-left: 22px; }
+.panel li { margin: 3px 0; }
+.stepbar { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+.dots { display: flex; gap: 6px; flex: 1; justify-content: center; }
+.dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.dots i.on { background: var(--pri); }
+.key { background: var(--soft); border-radius: 10px; padding: 10px 12px; margin: 10px 0; font-weight: 650; }
+.slide { border-left: 4px solid var(--learn); padding: 7px 11px; background: var(--soft); border-radius: 0 8px 8px 0; font-size: 14px; margin: 10px 0; white-space: pre-line; }
+.ck { border-top: 1px dashed var(--line); margin-top: 14px; padding-top: 12px; }
+.ck .qq { font-weight: 650; margin-bottom: 6px; }
+.ck .ckopt { display: block; width: 100%; text-align: left; margin: 6px 0; border: 2px solid var(--line); background: var(--card); color: var(--ink); border-radius: 10px; padding: 9px 12px; font: inherit; font-size: 15px; cursor: pointer; }
+.ck .ckopt:hover { border-color: var(--mut); }
+.ck .ckopt:disabled { cursor: default; color: var(--ink); }
+.ck .ckopt.ok { border-color: var(--ok); background: var(--okbg); }
+.ck .ckopt.bad { border-color: var(--bad); background: var(--badbg); }
+.ckfb { margin-top: 8px; font-size: 15px; }
+.mbtns { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0 10px; }
+.mbtns .btn.on { background: var(--pri); border-color: var(--pri); color: #fff; }
+.fx { background: var(--soft); border-radius: 10px; padding: 10px 12px; margin: 10px 0; font-size: 15px; }
+.fx ul { margin: 4px 0 0; }
+table.cmp { border-collapse: collapse; width: 100%; font-size: 14px; margin: 8px 0 10px; }
+table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+table.cmp th { background: var(--soft); }
+svg text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+.box-link { cursor: pointer; }
+.box-link:hover rect { stroke-width: 3; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="../#/"><span class="mark">S</span><span class="word">StudyCards</span></a>
+  <div style="flex:1;font-weight:700">APES Unit 2 · How air &amp; oceans move</div>
+  <button class="ib" id="theme" title="Dark mode"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/></svg></button>
+</header>
+<div class="wrapx">
+  <div class="chap" id="chap"></div>
+  <div class="stage">
+    <div class="scene" id="scene"></div>
+    <div class="panel">
+      <div id="body"></div>
+      <div class="stepbar">
+        <button class="btn" id="back">← Back</button>
+        <div class="dots" id="dots"></div>
+        <button class="btn primary" id="next">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const C = { k: '#1f2937', r: '#dc2626', b: '#2563eb', o: '#ea580c', g: '#15803d', w: '#ffffff', p: '#7c3aed', s: '#475569' };
+function S(tag, a = {}, p) { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+function T(p, x, y, s, a = {}) { const e = S('text', { x, y, 'font-size': 15, fill: C.k, 'text-anchor': 'middle', ...a }, p); e.textContent = s; return e; }
+function TL(p, x, y, lines, a = {}, lh = 18) { lines.forEach((s, i) => T(p, x, y + i * lh, s, a)); }
+function A(p, d, c = 'k', w = 2.5, extra = {}) { return S('path', { d, fill: 'none', stroke: C[c], 'stroke-width': w, 'marker-end': `url(#m-${c})`, ...extra }, p); }
+function lin(s, id, stops, vertical) {
+  const g = S('linearGradient', { id, x1: 0, y1: 0, x2: vertical ? 0 : 1, y2: vertical ? 1 : 0 }, s.querySelector('defs'));
+  stops.forEach(([o, c]) => S('stop', { offset: o, 'stop-color': c }, g));
+}
+function mix(a, b, t) {
+  t = Math.max(0, Math.min(1, t));
+  const h = x => [1, 3, 5].map(i => parseInt(x.slice(i, i + 2), 16));
+  const [A1, B1] = [h(a), h(b)];
+  return 'rgb(' + A1.map((v, i) => Math.round(v + (B1[i] - v) * t)).join(',') + ')';
+}
+
+let flows = [];
+function flow(p, d, o = {}) {
+  const path = S('path', { d, fill: 'none', stroke: o.trail || 'none', 'stroke-width': o.tw || 2, 'stroke-opacity': o.to ?? .25, 'stroke-linecap': 'round' }, p);
+  const L = path.getTotalLength();
+  const n = o.n || 10, dots = [];
+  for (let i = 0; i < n; i++) dots.push(S('circle', { r: o.r || 4, fill: o.color || C.k, stroke: o.stroke || 'none', 'stroke-width': 2 }, p));
+  const f = { path, L, dots, dur: o.dur || 6, speed: o.speed ?? 1, phase: Math.random(), colorFn: o.colorFn };
+  flows.push(f);
+  return f;
+}
+let last = performance.now();
+function tick(now) {
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  for (const f of flows) {
+    f.phase = (f.phase + dt * f.speed / f.dur) % 1;
+    f.dots.forEach((c, i) => {
+      const u = (f.phase + i / f.dots.length) % 1, pt = f.path.getPointAtLength(u * f.L);
+      c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y);
+      if (f.colorFn) c.setAttribute('fill', f.colorFn(pt));
+    });
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+function newSvg() {
+  const box = document.getElementById('scene'); box.innerHTML = ''; flows = [];
+  const s = S('svg', { viewBox: '0 0 800 450' }); box.appendChild(s);
+  const defs = S('defs', {}, s);
+  for (const k in C) {
+    const m = S('marker', { id: 'm-' + k, viewBox: '0 0 10 10', refX: 7, refY: 5, markerWidth: 5, markerHeight: 5, orient: 'auto-start-reverse' }, defs);
+    S('path', { d: 'M0,0 L10,5 L0,10 z', fill: C[k] }, m);
+  }
+  return s;
+}
+// rounded-rectangle loops; CW = up the left side, right along the top (on screen)
+function loopCW(x1, y1, x2, y2, r) { return `M${x1},${y2 - r} L${x1},${y1 + r} Q${x1},${y1} ${x1 + r},${y1} L${x2 - r},${y1} Q${x2},${y1} ${x2},${y1 + r} L${x2},${y2 - r} Q${x2},${y2} ${x2 - r},${y2} L${x1 + r},${y2} Q${x1},${y2} ${x1},${y2 - r}`; }
+function loopCCW(x1, y1, x2, y2, r) { return `M${x1},${y1 + r} L${x1},${y2 - r} Q${x1},${y2} ${x1 + r},${y2} L${x2 - r},${y2} Q${x2},${y2} ${x2},${y2 - r} L${x2},${y1 + r} Q${x2},${y1} ${x2 - r},${y1} L${x1 + r},${y1} Q${x1},${y1} ${x1},${y1 + r}`; }
+function spiralD(cx, cy, R, r0, a0, turn) {
+  let d = '';
+  for (let i = 0; i <= 48; i++) { const t = i / 48, r = R - (R - r0) * t, a = a0 + turn * t; d += (i ? 'L' : 'M') + (cx + r * Math.cos(a)).toFixed(1) + ',' + (cy - r * Math.sin(a)).toFixed(1); }
+  return d;
+}
+function cloud(p, x, y, s = 1, rain = true, fill = '#e2e8f0') {
+  const g = S('g', { transform: `translate(${x},${y}) scale(${s})` }, p);
+  if (rain) for (let i = -2; i <= 2; i++) S('line', { x1: i * 11, y1: 22, x2: i * 11 - 5, y2: 44, stroke: C.b, 'stroke-width': 2.5, 'stroke-linecap': 'round' }, g);
+  [[-22, 6, 16], [0, -4, 21], [22, 6, 16], [0, 10, 18]].forEach(([dx, dy, r]) => S('circle', { cx: dx, cy: dy, r, fill }, g));
+  return g;
+}
+function fish(p, x, y) {
+  S('path', { d: `M${x + 12},${y} L${x + 20},${y - 6} L${x + 20},${y + 6} Z`, fill: '#fde68a' }, p);
+  S('ellipse', { cx: x, cy: y, rx: 13, ry: 6, fill: '#fde68a' }, p);
+  S('circle', { cx: x - 7, cy: y - 1, r: 1.6, fill: C.k }, p);
+}
+function sun(p, x, y, r = 15) {
+  for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; S('line', { x1: x + Math.cos(a) * (r + 4), y1: y + Math.sin(a) * (r + 4), x2: x + Math.cos(a) * (r + 11), y2: y + Math.sin(a) * (r + 11), stroke: '#f59e0b', 'stroke-width': 3, 'stroke-linecap': 'round' }, p); }
+  S('circle', { cx: x, cy: y, r, fill: '#facc15' }, p);
+}
+
+/* ---------- 1. CELLS (side view, equator → pole) ---------- */
+const X = l => 70 + l * 7.333;
+function cellsScene(s, stage) {
+  lin(s, 'sky', [['0', '#dbeafe'], ['1', '#f0f9ff']], true);
+  lin(s, 'heat', [['0', '#ef4444'], ['0.35', '#f59e0b'], ['0.7', '#86efac'], ['1', '#bfdbfe']]);
+  S('rect', { x: 0, y: 0, width: 800, height: 450, fill: 'url(#sky)' }, s);
+  S('rect', { x: 0, y: 380, width: 800, height: 70, fill: 'url(#heat)', opacity: .85 }, s);
+  S('line', { x1: 30, y1: 110, x2: 780, y2: 110, stroke: '#64748b', 'stroke-dasharray': '6 5' }, s);
+  T(s, 520, 103, 'top of the troposphere (about 8 miles up)', { fill: C.s, 'font-size': 13 });
+  [[0, '0° Equator'], [30, '30°'], [60, '60°'], [90, '90° Pole']].forEach(([l, t]) => {
+    S('line', { x1: X(l), y1: 380, x2: X(l), y2: 392, stroke: C.k, 'stroke-width': 2 }, s);
+    T(s, Math.max(X(l), 52), 410, t, { 'font-weight': 700 });
+  });
+  if (stage === 0) {
+    T(s, 70, 436, 'HOTTEST: direct sun', { 'font-size': 13, 'font-weight': 700, fill: '#991b1b', 'text-anchor': 'start' });
+    T(s, 780, 436, 'COLDEST: low-angle sun', { 'font-size': 13, 'font-weight': 700, fill: '#1e3a8a', 'text-anchor': 'end' });
+    flow(s, 'M95,375 L95,122', { n: 7, color: C.o, r: 5, dur: 4 });
+    flow(s, 'M125,375 L125,122', { n: 7, color: C.o, r: 5, dur: 4.6 });
+    TL(s, 230, 230, ['hot air near the equator', 'gets lighter and RISES'], { 'font-weight': 700, fill: C.o });
+    A(s, 'M180,225 L140,225', 'o', 2.5);
+    return;
+  }
+  flow(s, loopCW(X(0) + 18, 140, X(30) - 18, 362, 30), { n: 16, color: C.o, r: 5, dur: 9, trail: C.o, tw: 3 });
+  T(s, X(15), 260, 'HADLEY CELL', { 'font-weight': 800, fill: C.o });
+  cloud(s, 110, 150, 1);
+  S('path', { d: `M${X(30) - 50},380 Q${X(30)},352 ${X(30) + 50},380 Z`, fill: '#fcd34d' }, s);
+  const lab = (l, a, b, c) => { const x = Math.min(Math.max(X(l), 60), 745); T(s, x, 32, a, { 'font-weight': 800, fill: c }); T(s, x, 52, b, { 'font-size': 13, fill: C.s }); };
+  lab(0, 'RISES', 'cools → rain', C.b);
+  lab(30, 'SINKS', 'warms → dry', C.o);
+  if (stage >= 2) {
+    flow(s, loopCCW(X(30) + 18, 140, X(60) - 18, 362, 30), { n: 16, color: C.g, r: 5, dur: 9, trail: C.g, tw: 3 });
+    flow(s, loopCW(X(60) + 18, 140, X(90) - 18, 362, 30), { n: 16, color: C.b, r: 5, dur: 9, trail: C.b, tw: 3 });
+    T(s, X(45), 260, 'FERREL CELL', { 'font-weight': 800, fill: C.g });
+    T(s, X(75), 260, 'POLAR CELL', { 'font-weight': 800, fill: C.b });
+    cloud(s, X(60), 150, 1);
+    S('rect', { x: X(90) - 70, y: 374, width: 80, height: 8, fill: '#f8fafc', rx: 3 }, s);
+    lab(60, 'RISES', 'cools → rain', C.b);
+    lab(90, 'SINKS', 'cold & dry', C.o);
+  }
+  if (stage >= 3) {
+    [[0, 'LOW'], [30, 'HIGH'], [60, 'LOW'], [90, 'HIGH']].forEach(([l, t]) => T(s, Math.min(Math.max(X(l), 60), 745), 72, t + ' pressure', { 'font-size': 13, 'font-weight': 700, fill: t === 'LOW' ? C.b : C.o }));
+    [[0, 'rainforest'], [30, 'deserts'], [60, 'temperate & boreal forest'], [90, 'ice & tundra']].forEach(([l, t]) => T(s, Math.min(Math.max(X(l), 52), 740), 436, t, { 'font-size': 13, 'font-weight': 700, fill: '#14532d' }));
+    [[15, 'surface: trade winds'], [45, 'surface: westerlies'], [75, 'surface: polar easterlies']].forEach(([l, t]) => T(s, X(l), 376, t, { 'font-size': 12, fill: C.k }));
+  }
+}
+
+/* ---------- 2. WINDS / CORIOLIS (map view) ---------- */
+const Y = l => 225 - l * 2.3;
+function windBase(s) {
+  const band = (a, b, c) => S('rect', { x: 0, y: Y(b), width: 800, height: Y(a) - Y(b), fill: c }, s);
+  band(60, 90, '#e0f2fe'); band(30, 60, '#dcfce7'); band(0, 30, '#fef9c3');
+  band(-30, 0, '#fef9c3'); band(-60, -30, '#dcfce7'); band(-90, -60, '#e0f2fe');
+  S('rect', { x: 0, y: Y(4), width: 800, height: Y(-4) - Y(4), fill: '#fecaca' }, s);
+  [60, 30, 0, -30, -60].forEach(l => {
+    S('line', { x1: 0, y1: Y(l), x2: 800, y2: Y(l), stroke: '#94a3b8', 'stroke-dasharray': '5 5' }, s);
+    T(s, 8, Y(l) - 5, l === 0 ? '0° equator' : Math.abs(l) + '°' + (l > 0 ? 'N' : 'S'), { 'text-anchor': 'start', 'font-size': 13, 'font-weight': 700, fill: C.s });
+  });
+  [[88, 'H polar high'], [60, 'L subpolar low'], [30, 'H subtropical high'], [0, 'L ITCZ'], [-30, 'H subtropical high'], [-60, 'L subpolar low'], [-88, 'H polar high']].forEach(([l, t]) =>
+    T(s, 792, Y(l) + (Math.abs(l) === 88 ? (l > 0 ? 12 : -2) : -5), t, { 'text-anchor': 'end', 'font-size': 12, 'font-weight': 700, fill: t[0] === 'H' ? C.o : C.b }));
+  T(s, 400, 14, 'W ←  map view, north is up  → E', { 'font-size': 12, fill: C.s });
+}
+const XS = [260, 420, 580];
+function straightWinds(s, south) {
+  const sg = south ? -1 : 1;
+  XS.forEach(x => {
+    A(s, `M${x},${Y(sg * 27)} L${x},${Y(sg * 5)}`, 's', 2, { 'stroke-dasharray': '5 4', opacity: .6 });
+    A(s, `M${x - 60},${Y(sg * 33)} L${x - 60},${Y(sg * 55)}`, 's', 2, { 'stroke-dasharray': '5 4', opacity: .6 });
+    A(s, `M${x + 40},${Y(sg * 87)} L${x + 40},${Y(sg * 65)}`, 's', 2, { 'stroke-dasharray': '5 4', opacity: .6 });
+  });
+}
+function curvedWinds(s, south) {
+  const sg = south ? -1 : 1;
+  XS.forEach(x => {
+    const tr = `M${x},${Y(sg * 27)} Q${x},${Y(sg * 13)} ${x - 120},${Y(sg * 3)}`;
+    const we = `M${x - 60},${Y(sg * 33)} Q${x - 60},${Y(sg * 47)} ${x + 60},${Y(sg * 57)}`;
+    const po = `M${x + 40},${Y(sg * 87)} Q${x + 40},${Y(sg * 76)} ${x - 80},${Y(sg * 63)}`;
+    A(s, tr, 'o', 2.5, { opacity: .55 }); A(s, we, 'g', 2.5, { opacity: .55 }); A(s, po, 'b', 2.5, { opacity: .55 });
+    flow(s, tr, { n: 4, color: C.o, r: 4.5, dur: 3.5 });
+    flow(s, we, { n: 4, color: C.g, r: 4.5, dur: 3.5 });
+    flow(s, po, { n: 4, color: C.b, r: 4.5, dur: 3.5 });
+  });
+  const lb = (l, t, c) => T(s, 712, Y(l) + 5, t, { 'font-size': 14, 'font-weight': 800, fill: c });
+  if (!south) { lb(16, 'NE trade winds', C.o); lb(45, 'westerlies', C.g); lb(75, 'polar easterlies', C.b); }
+  else { lb(-16, 'SE trade winds', C.o); lb(-45, 'westerlies', C.g); lb(-75, 'polar easterlies', C.b); }
+}
+function windScene(s, stage) {
+  windBase(s);
+  if (stage === 0) { straightWinds(s, false); straightWinds(s, true); T(s, 712, Y(45), 'no spin:', { 'font-weight': 700, fill: C.s }); T(s, 712, Y(45) + 18, 'straight N or S', { 'font-weight': 700, fill: C.s }); return; }
+  straightWinds(s, false); curvedWinds(s, false);
+  if (stage >= 2) { straightWinds(s, true); curvedWinds(s, true); T(s, 712, Y(0) + 5, '→ converge ←', { 'font-size': 13, 'font-weight': 800, fill: '#991b1b' }); }
+  else T(s, 400, Y(-45), 'Southern Hemisphere: next step', { fill: C.s, 'font-size': 14 });
+}
+
+/* ---------- 3. TWO KINDS OF SPIN ---------- */
+function spinScene(s, stage) {
+  S('rect', { x: 0, y: 0, width: 400, height: 450, fill: '#e0f2fe' }, s);
+  S('rect', { x: 400, y: 0, width: 400, height: 450, fill: stage >= 2 ? '#cfe8ff' : '#f1f5f9' }, s);
+  T(s, 200, 30, 'A STORM: air rushing INTO a low', { 'font-weight': 800 });
+  const cx = 200, cy = 245;
+  if (stage === 0) {
+    for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; A(s, `M${cx + 160 * Math.cos(a)},${cy - 160 * Math.sin(a)} L${cx + 45 * Math.cos(a)},${cy - 45 * Math.sin(a)}`, 's', 2.5, { 'stroke-dasharray': '6 4' }); }
+    T(s, 200, 430, 'air moves straight in (no spin yet)', { fill: C.s });
+  } else {
+    for (let k = 0; k < 8; k++) {
+      const d = spiralD(cx, cy, 165, 28, k * Math.PI / 4, 1.9);
+      A(s, d, 'b', 2, { opacity: .45 });
+      flow(s, d, { n: 4, color: C.b, r: 4.5, dur: 4 });
+    }
+    T(s, 200, 430, 'each stream curves RIGHT → COUNTERCLOCKWISE', { 'font-weight': 800, fill: C.b, 'font-size': 14 });
+  }
+  T(s, cx, cy + 12, 'L', { 'font-size': 38, 'font-weight': 900, fill: C.b });
+  if (stage >= 2) {
+    T(s, 600, 30, 'A GYRE: water pushed by 2 wind belts', { 'font-weight': 800 });
+    S('rect', { x: 430, y: 120, width: 18, height: 260, fill: '#86efac' }, s);
+    S('rect', { x: 752, y: 120, width: 18, height: 260, fill: '#86efac' }, s);
+    A(s, 'M500,92 L700,92', 'g', 4); T(s, 600, 78, 'westerlies push the top EAST', { 'font-size': 13, 'font-weight': 700, fill: C.g });
+    A(s, 'M700,408 L500,408', 'o', 4); T(s, 600, 432, 'trade winds push the bottom WEST', { 'font-size': 13, 'font-weight': 700, fill: C.o });
+    const d = loopCW(470, 130, 730, 370, 50);
+    S('path', { d, fill: 'none', stroke: C.p, 'stroke-width': 3, opacity: .35 }, s);
+    flow(s, d, { n: 22, color: C.p, r: 5, dur: 10 });
+    T(s, 600, 245, 'CLOCKWISE', { 'font-size': 22, 'font-weight': 900, fill: C.p });
+    T(s, 600, 268, '“opposite of Coriolis”', { 'font-size': 13, fill: C.s });
+  } else T(s, 600, 240, '(next step)', { fill: '#94a3b8' });
+}
+
+/* ---------- 4. HURRICANES ---------- */
+function hurrTop(s) {
+  S('rect', { x: 0, y: 0, width: 800, height: 450, fill: '#1e3a5f' }, s);
+  const cx = 340, cy = 225;
+  for (let k = 0; k < 5; k++) {
+    const d = spiralD(cx, cy, 205, 30, k * 2 * Math.PI / 5, 2.7);
+    S('path', { d, fill: 'none', stroke: '#fff', 'stroke-width': 20, opacity: .2, 'stroke-linecap': 'round' }, s);
+    flow(s, d, { n: 6, color: '#fff', r: 3.5, dur: 4.5 });
+  }
+  S('circle', { cx, cy, r: 24, fill: '#1e3a5f', stroke: '#fff', 'stroke-width': 7, opacity: .95 }, s);
+  T(s, cx, cy + 6, 'L', { 'font-size': 18, 'font-weight': 900, fill: '#fff' });
+  const W = { fill: '#fff', 'text-anchor': 'start', 'font-size': 15 };
+  TL(s, 580, 70, ['LOW pressure center', 'air rushes in from', 'every side'], { ...W, 'font-weight': 700 });
+  TL(s, 580, 175, ['EYE: calm, clear,', 'sinking air'], W);
+  TL(s, 580, 245, ['EYEWALL: strongest', 'winds, heaviest rain'], W);
+  TL(s, 580, 330, ['spins COUNTERCLOCKWISE', '(Northern Hemisphere)'], { ...W, 'font-weight': 800, fill: '#93c5fd' });
+  A(s, 'M575,170 L372,220', 'w', 1.5, { opacity: .7 });
+}
+function hurrSide(s) {
+  lin(s, 'hs', [['0', '#e0f2fe'], ['1', '#f8fafc']], true);
+  lin(s, 'wo', [['0', '#fb923c'], ['1', '#dc2626']], true);
+  S('rect', { x: 0, y: 0, width: 800, height: 370, fill: 'url(#hs)' }, s);
+  S('rect', { x: 0, y: 370, width: 800, height: 80, fill: 'url(#wo)' }, s);
+  T(s, 400, 415, 'warm ocean water — at least about 26.5 °C (80 °F)', { fill: '#fff', 'font-weight': 800 });
+  [[300, 375], [425, 500]].forEach(([a, b]) => S('path', { d: `M${a},345 L${a},120 Q${a},80 ${(a + b) / 2},80 Q${b},80 ${b},120 L${b},345 Z`, fill: '#cbd5e1', opacity: .85 }, s));
+  S('path', { d: 'M180,95 Q400,40 620,95', fill: 'none', stroke: '#cbd5e1', 'stroke-width': 26, opacity: .6, 'stroke-linecap': 'round' }, s);
+  const L = 'M20,356 L320,356 Q338,356 338,338 L338,112 Q338,95 320,93 L40,72';
+  const R = 'M780,356 L480,356 Q462,356 462,338 L462,112 Q462,95 480,93 L760,72';
+  [L, R].forEach(d => flow(s, d, { n: 14, color: C.r, r: 4.5, dur: 6, trail: C.r, tw: 2, to: .3 }));
+  flow(s, 'M400,110 L400,345', { n: 3, color: '#64748b', r: 4, dur: 7 });
+  [70, 160, 250, 550, 640, 730].forEach(x => A(s, `M${x},368 q7,-8 0,-15 q-7,-8 0,-15`, 'b', 2));
+  T(s, 400, 30, 'EYE: calm, sinking air', { 'font-size': 13, 'font-weight': 700, fill: C.s });
+  const B = { 'text-anchor': 'start', 'font-size': 14, 'font-weight': 700 };
+  TL(s, 20, 300, ['① warm water evaporates', '   → warm, moist air'], { ...B, fill: C.b }, 17);
+  TL(s, 20, 200, ['② air spirals in and', '   RISES in the eyewall'], { ...B, fill: C.r }, 17);
+  TL(s, 530, 175, ['③ water vapor condenses', '   → releases HEAT', '   → air rises even faster'], { ...B, fill: '#9a3412' }, 17);
+  TL(s, 530, 275, ['④ pressure drops more', '   → more air rushes in', '   (positive feedback)'], { ...B, fill: C.p }, 17);
+}
+const HY = l => 420 - l * 8.5;
+function hurrMap(s) {
+  S('rect', { x: 0, y: 0, width: 800, height: 450, fill: '#bfdbfe' }, s);
+  const land = { fill: '#bbf7d0', stroke: '#15803d', 'stroke-width': 1.5 };
+  S('path', { d: 'M0,30 L330,30 L330,95 L300,130 L262,170 L236,200 L224,238 L212,242 L205,205 L170,205 L140,230 L110,262 L0,272 Z', ...land }, s);
+  S('path', { d: 'M0,330 L110,330 L190,345 L300,390 L330,450 L0,450 Z', ...land }, s);
+  S('path', { d: 'M600,450 L620,390 L680,360 L730,345 L740,300 L720,250 L740,200 L800,170 L800,450 Z', ...land }, s);
+  S('path', { d: 'M720,30 L800,30 L800,130 L760,140 L730,110 Z', ...land }, s);
+  T(s, 140, 110, 'North America', { 'font-weight': 700, fill: '#14532d' });
+  T(s, 120, 410, 'South America', { 'font-weight': 700, fill: '#14532d' });
+  T(s, 730, 410, 'Africa', { 'font-weight': 700, fill: '#14532d' });
+  [0, 10, 20, 30, 40].forEach(l => { S('line', { x1: 0, y1: HY(l), x2: 800, y2: HY(l), stroke: '#64748b', 'stroke-dasharray': '4 6', opacity: .6 }, s); T(s, 795, HY(l) - 4, l + '°N', { 'text-anchor': 'end', 'font-size': 12, fill: C.s }); });
+  T(s, 470, HY(0) + 22, 'equator: almost never forms here (no Coriolis to start the spin)', { 'font-size': 13, 'font-weight': 700, fill: '#1e3a8a' });
+  S('rect', { x: 340, y: HY(20), width: 330, height: HY(5) - HY(20), fill: '#f97316', opacity: .15 }, s);
+  T(s, 505, HY(6), 'birth zone: warm water, ~5–20°', { 'font-size': 13, 'font-weight': 700, fill: '#9a3412' });
+  const d = 'M700,318 C560,300 380,300 300,240 C240,195 260,140 420,85';
+  A(s, d, 'k', 2.5, { 'stroke-dasharray': '7 5' });
+  flow(s, d, { n: 1, color: '#f97316', r: 12, stroke: '#fff', dur: 7 });
+  T(s, 520, 286, '← trade winds push it WEST', { 'font-weight': 800, fill: C.o });
+  T(s, 520, 120, 'westerlies push it NORTHEAST →', { 'font-weight': 800, fill: C.g });
+  T(s, 360, 205, 'curves north', { 'font-size': 13, 'font-weight': 700, 'text-anchor': 'start' });
+  T(s, 560, 60, 'weakens over land or cold water (no fuel)', { 'font-size': 13, 'font-weight': 700, fill: C.s });
+}
+
+/* ---------- 5. GYRES ---------- */
+const GY = l => 225 - l * 3.6;
+function gyreScene(s, stage) {
+  S('rect', { x: 0, y: 0, width: 800, height: 450, fill: '#cfe8ff' }, s);
+  const land = { fill: '#bbf7d0', stroke: '#15803d', 'stroke-width': 1.5 };
+  S('rect', { x: 0, y: 0, width: 150, height: 450, ...land }, s);
+  S('rect', { x: 650, y: 0, width: 150, height: 450, ...land }, s);
+  S('line', { x1: 150, y1: 225, x2: 650, y2: 225, stroke: '#64748b', 'stroke-dasharray': '5 5' }, s);
+  T(s, 400, 240, 'equator', { 'font-size': 12, fill: C.s });
+  const LG = { 'font-size': 13, 'font-weight': 800, fill: '#14532d' };
+  TL(s, 75, 24, ['North', 'America'], LG, 15);
+  TL(s, 725, 24, ['Europe /', 'Africa'], LG, 15);
+  if (stage >= 4) { TL(s, 75, 300, ['South', 'America'], LG, 15); T(s, 725, 300, 'Africa', LG); }
+  const wind = (y, dir, c, label, ly) => {
+    [230, 380, 530].forEach(x => dir < 0 ? A(s, `M${x + 90},${y} L${x},${y}`, c, 3.5) : A(s, `M${x},${y} L${x + 90},${y}`, c, 3.5));
+    T(s, 400, ly, label, { 'font-size': 13, 'font-weight': 800, fill: C[c] });
+  };
+  wind(42, 1, 'g', 'westerlies (from the west) push the water EAST →', 24);
+  wind(205, -1, 'o', '← trade winds (from the east) push the water WEST', 221);
+  if (stage === 1) {
+    flow(s, 'M600,180 L170,180', { n: 9, color: C.p, r: 5, dur: 5 });
+    flow(s, 'M200,72 L630,72', { n: 9, color: C.p, r: 5, dur: 5 });
+    T(s, 165, 160, '?', { 'font-size': 30, 'font-weight': 900, fill: C.p });
+    T(s, 637, 100, '?', { 'font-size': 30, 'font-weight': 900, fill: C.p });
+  }
+  const tint = pt => mix('#dc2626', '#2563eb', (pt.x - 190) / 420);
+  if (stage >= 2) {
+    const d = loopCW(190, GY(45), 610, GY(10), 40);
+    S('path', { d, fill: 'none', stroke: stage >= 3 ? '#64748b' : C.p, 'stroke-width': 3, opacity: .3 }, s);
+    flow(s, d, { n: 30, color: C.p, r: 5, dur: 14, colorFn: stage >= 3 ? tint : null });
+    T(s, 400, 132, 'CLOCKWISE', { 'font-size': 22, 'font-weight': 900, fill: stage >= 3 ? C.k : C.p });
+  }
+  if (stage >= 3) {
+    TL(s, 75, 95, ['Gulf Stream', 'WARM', 'flows north', 'from tropics'], { 'font-size': 13, 'font-weight': 800, fill: C.r }, 16);
+    TL(s, 725, 95, ['Canary Current', 'COLD', 'flows south', '+ upwelling'], { 'font-size': 13, 'font-weight': 800, fill: C.b }, 16);
+    T(s, 75, 175, '(east coast)', { 'font-size': 12, fill: C.s });
+    T(s, 725, 175, '(west coast)', { 'font-size': 12, fill: C.s });
+  }
+  if (stage >= 4) {
+    wind(245, -1, 'o', '', 0);
+    wind(410, 1, 'g', '', 0);
+    const d = loopCCW(190, GY(-10), 610, GY(-45), 40);
+    S('path', { d, fill: 'none', stroke: '#64748b', 'stroke-width': 3, opacity: .3 }, s);
+    flow(s, d, { n: 30, color: C.p, r: 5, dur: 14, colorFn: tint });
+    T(s, 400, 330, 'COUNTERCLOCKWISE', { 'font-size': 20, 'font-weight': 900 });
+    TL(s, 75, 335, ['Brazil Current', 'WARM, flows south'], { 'font-size': 12, 'font-weight': 800, fill: C.r }, 15);
+    TL(s, 725, 335, ['Benguela Current', 'COLD, flows north', '+ upwelling'], { 'font-size': 12, 'font-weight': 800, fill: C.b }, 15);
+  }
+}
+
+/* ---------- 6. EL NIÑO ---------- */
+let ensoMode = 'normal';
+const ENSO = {
+  normal: { wl: 340, el: 232, speed: 1, rise: 150, fx: '' },
+  nino: { wl: 285, el: 292, speed: .45, rise: 600 },
+  nina: { wl: 368, el: 214, speed: 1.8, rise: 150 },
+};
+function ensoScene(s) {
+  const m = ENSO[ensoMode];
+  S('rect', { x: 0, y: 0, width: 800, height: 205, fill: '#eff6ff' }, s);
+  S('rect', { x: 70, y: 205, width: 660, height: 245, fill: '#1e40af' }, s);
+  lin(s, 'warm', [['0', '#ef4444'], ['1', '#fdba74']]);
+  S('path', { d: `M70,205 L730,205 L730,${m.el} L70,${m.wl} Z`, fill: 'url(#warm)' }, s);
+  S('line', { x1: 70, y1: m.wl, x2: 730, y2: m.el, stroke: '#fff', 'stroke-width': 2, 'stroke-dasharray': '7 5' }, s);
+  T(s, 400, (m.wl + m.el) / 2 + 18, 'thermocline', { 'font-size': 12, fill: '#fff', 'font-weight': 700 });
+  T(s, 400, 432, 'COLD, nutrient-rich deep water', { fill: '#dbeafe', 'font-weight': 700 });
+  const land = { fill: '#86efac', stroke: '#15803d', 'stroke-width': 1.5 };
+  S('rect', { x: 0, y: 190, width: 70, height: 260, ...land }, s);
+  S('path', { d: 'M730,205 L766,118 L800,205 L800,450 L730,450 Z', ...land }, s);
+  TL(s, 36, 160, ['Indonesia', 'Australia'], { 'font-size': 12, 'font-weight': 800, fill: '#14532d' }, 14);
+  TL(s, 752, 92, ['Peru', '(S. Am.)'], { 'font-size': 12, 'font-weight': 800, fill: '#14532d' }, 14);
+  if (ensoMode === 'nino') {
+    const d = loopCCW(170, 70, 600, 188, 30);
+    S('path', { d, fill: 'none', stroke: '#94a3b8', 'stroke-width': 2, opacity: .5 }, s);
+    flow(s, d, { n: 12, color: '#475569', r: 4, dur: 9, speed: m.speed });
+    cloud(s, 640, 60, 1.15);
+    sun(s, 150, 55);
+    T(s, 150, 105, 'DROUGHT', { 'font-weight': 800, fill: C.o });
+    T(s, 655, 145, 'RAIN / FLOODS', { 'font-weight': 800, fill: C.b });
+    T(s, 385, 200, 'trade winds WEAK (can even reverse)', { 'font-size': 13, 'font-weight': 800, fill: C.k });
+    T(s, 470, 250, 'warm water sloshes EAST →', { 'font-weight': 800, fill: '#7f1d1d' });
+    T(s, 610, 340, '✕ upwelling blocked', { 'font-weight': 800, fill: '#fecaca' });
+    T(s, 610, 360, 'few fish', { 'font-size': 13, fill: '#fecaca' });
+  } else {
+    const d = loopCW(150, 70, 650, 188, 30);
+    S('path', { d, fill: 'none', stroke: '#94a3b8', 'stroke-width': 2, opacity: .5 }, s);
+    flow(s, d, { n: 16, color: '#475569', r: 4, dur: 9, speed: m.speed });
+    cloud(s, 110, 60, ensoMode === 'nina' ? 1.35 : 1.1);
+    sun(s, 650, 50);
+    T(s, 110, 130, ensoMode === 'nina' ? 'HEAVY RAIN' : 'RAIN', { 'font-weight': 800, fill: C.b });
+    T(s, 650, 100, 'DRY', { 'font-weight': 800, fill: C.o });
+    T(s, 400, 200, ensoMode === 'nina' ? '← trade winds EXTRA STRONG' : '← trade winds blow WEST', { 'font-size': 13, 'font-weight': 800, fill: C.k });
+    T(s, 230, 262, 'WARM water piles up', { 'font-weight': 800, fill: '#7f1d1d' });
+    T(s, 120, 198, 'sea level +½ m', { 'font-size': 11, fill: C.s });
+    const up = 'M705,440 Q705,214 600,211';
+    flow(s, up, { n: ensoMode === 'nina' ? 10 : 6, color: '#93c5fd', r: 4.5, dur: 5, speed: m.speed });
+    T(s, 610, 330, 'cold water RISES', { 'font-weight': 800, fill: '#dbeafe' });
+    T(s, 610, 348, '(upwelling)', { 'font-size': 13, fill: '#dbeafe' });
+    const fishN = ensoMode === 'nina' ? 6 : 3;
+    for (let i = 0; i < fishN; i++) fish(s, 470 + (i % 3) * 34, 292 + Math.floor(i / 3) * 20);
+  }
+  T(s, 400, 22, { normal: 'NORMAL YEAR', nino: 'EL NIÑO', nina: 'LA NIÑA' }[ensoMode], { 'font-size': 18, 'font-weight': 900, fill: ensoMode === 'nino' ? C.r : ensoMode === 'nina' ? C.b : C.k });
+}
+const FX = {
+  normal: '<b>Normal:</b> rain in Indonesia &amp; Australia · upwelling and a huge fishery off Peru · dry coast of Peru.',
+  nino: '<b>El Niño effects (your slide):</b><ul><li>Warming of the Pacific off Peru</li><li>Warm, dry winters in the northwestern U.S. (you!)</li><li>Cool, wet winters in the southwestern U.S.</li><li>Flooding in Peru</li><li>Drought in Australia and Indonesia</li><li>Plus: upwelling stops → fisheries crash; coral bleaching</li></ul>',
+  nina: '<b>La Niña effects (opposite):</b><ul><li>Even more upwelling → more fish off Peru</li><li>Heavier rain, even flooding, in Australia &amp; Indonesia</li><li>Cold, wet winters in the Pacific Northwest</li><li>Drier southwestern U.S.</li></ul>',
+};
+
+/* ---------- 7. THERMOHALINE ---------- */
+let melted = false;
+function densityScene(s) {
+  S('rect', { x: 0, y: 0, width: 800, height: 450, fill: '#f0f9ff' }, s);
+  lin(s, 'tank', [['0', '#bfdbfe'], ['1', '#1e3a8a']], true);
+  S('rect', { x: 180, y: 50, width: 420, height: 370, rx: 10, fill: 'url(#tank)', stroke: '#334155', 'stroke-width': 2 }, s);
+  const blob = (x, y, c, a, b, tc) => { S('circle', { cx: x, cy: y, r: 24, fill: c, stroke: '#fff', 'stroke-width': 3 }, s); T(s, x, y + 44, a, { 'font-size': 14, 'font-weight': 800, fill: tc }); if (b) T(s, x, y + 61, b, { 'font-size': 12, fill: tc }); };
+  blob(390, 85, '#f87171', 'WARM + FRESH', 'least dense: floats on top', C.k);
+  blob(290, 215, '#fb923c', 'warm + salty', 'in between', '#fff');
+  blob(490, 215, '#93c5fd', 'cold + fresh', 'in between', '#fff');
+  blob(390, 330, '#0f172a', 'COLD + SALTY', 'MOST dense: sinks to the bottom', '#fff');
+  A(s, 'M650,80 L650,400', 'k', 3);
+  T(s, 660, 80, 'less dense', { 'text-anchor': 'start', 'font-weight': 700 });
+  T(s, 660, 405, 'more dense', { 'text-anchor': 'start', 'font-weight': 700 });
+  T(s, 390, 442, 'thermo = temperature   ·   haline = salt', { 'font-size': 14, fill: C.s, 'font-weight': 700 });
+}
+function conveyorScene(s, stage) {
+  S('rect', { x: 0, y: 0, width: 800, height: 450, fill: '#e0f2fe' }, s);
+  lin(s, 'belt', [['0', '#ef4444'], ['1', '#2563eb']], true);
+  const d = loopCCW(150, 140, 650, 330, 50);
+  S('path', { d, fill: 'none', stroke: 'url(#belt)', 'stroke-width': 26, opacity: melted ? .15 : .3 }, s);
+  flow(s, d, { n: 34, r: 5.5, dur: 16, speed: melted ? .18 : 1, colorFn: pt => mix('#dc2626', '#1d4ed8', (pt.y - 140) / 190) });
+  T(s, 400, 118, 'WARM surface water flows toward the North Atlantic', { 'font-weight': 800, fill: C.r });
+  TL(s, 125, 215, ['SINKS near', 'Greenland', '(cold + salty)'], { 'text-anchor': 'end', 'font-weight': 800, fill: '#1e3a8a' });
+  TL(s, 675, 215, ['RISES near', 'the equator', '(upwelling)'], { 'text-anchor': 'start', 'font-weight': 800, fill: '#9a3412' });
+  TL(s, 400, 368, ['COLD deep water flows along the ocean floor', 'to Antarctica, then the Indian & Pacific'], { 'font-weight': 700, fill: '#1e3a8a' });
+  T(s, 400, 240, 'one loop ≈ 1,000 years', { 'font-size': 17, 'font-weight': 800, fill: C.k });
+  if (stage >= 2) {
+    T(s, 400, 60, melted ? 'less warm water arrives → England / Europe COOLS' : 'Gulf Stream → warms England', { 'font-size': 16, 'font-weight': 800, fill: melted ? C.b : C.r });
+    if (melted) T(s, 400, 80, '(Newfoundland is already cold at the same latitude)', { 'font-size': 12, fill: C.s }); else sun(s, 600, 55, 12);
+    T(s, 175, 275, 'oxygen ↓', { 'text-anchor': 'start', 'font-size': 13, 'font-weight': 700, fill: '#1e3a8a' });
+    T(s, 625, 275, 'nutrients ↑', { 'text-anchor': 'end', 'font-size': 13, 'font-weight': 700, fill: '#9a3412' });
+  }
+  if (melted) {
+    S('ellipse', { cx: 185, cy: 150, rx: 60, ry: 22, fill: '#f0fdff', stroke: '#67e8f9', 'stroke-width': 3 }, s);
+    T(s, 185, 155, 'fresh meltwater', { 'font-size': 12, 'font-weight': 800, fill: '#0e7490' });
+    T(s, 400, 300, 'fresh = less dense → less sinking → conveyor SLOWS', { 'font-size': 14, 'font-weight': 800, fill: '#0e7490' });
+  }
+}
+
+/* ---------- 8. BIG PICTURE ---------- */
+function bigScene(s) {
+  S('rect', { x: 0, y: 0, width: 800, height: 450, fill: '#f8fafc' }, s);
+  const box = (x, y, w, h, lines, fill, stroke, ch, dash) => {
+    const g = S('g', { class: 'box-link' }, s);
+    S('rect', { x, y, width: w, height: h, rx: 10, fill, stroke, 'stroke-width': 2, 'stroke-dasharray': dash || '' }, g);
+    const top = y + h / 2 - (lines.length - 1) * 8 + 5;
+    lines.forEach((t, i) => T(g, x + w / 2, top + i * 16, t, { 'font-size': i ? 12.5 : 13.5, 'font-weight': i ? 500 : 800 }));
+    g.addEventListener('click', () => go(ch, 0));
+  };
+  box(250, 8, 300, 40, ['☀ The sun heats the equator the most'], '#fef3c7', '#d97706', 0);
+  box(225, 70, 350, 40, ['Hot air rises, cool air sinks (convection)'], '#fee2e2', '#dc2626', 0);
+  box(175, 132, 450, 52, ['3 cells: rise / sink / rise / sink at 0° 30° 60° 90°', 'wet at 0° & 60°, dry at 30° & 90° → where the biomes are'], '#ffedd5', '#ea580c', 0);
+  box(175, 206, 450, 52, ['Coriolis curves the surface air', 'trade winds (from E) · westerlies (from W) · polar easterlies (from E)'], '#dcfce7', '#15803d', 1);
+  box(8, 282, 255, 70, ['Winds drag the ocean → gyres', 'clockwise N, counterclockwise S', 'warm east coasts, cold west coasts'], '#dbeafe', '#2563eb', 4);
+  box(272, 282, 255, 70, ['Wind hits mountains', 'windward side wet, leeward dry', '→ rain shadow'], '#f1f5f9', '#475569', 0);
+  box(537, 282, 255, 70, ['Warm ocean + low pressure + spin', '→ hurricanes (CCW in the north)', 'steered W by trades, NE by westerlies'], '#ede9fe', '#7c3aed', 3);
+  box(8, 376, 255, 58, ['Trade winds weaken', '→ upwelling stops → El Niño'], '#fee2e2', '#dc2626', 5);
+  box(290, 376, 502, 58, ['A separate engine: cold + salty water SINKS', '→ thermohaline conveyor (deep, global, ~1,000 years)'], '#e0f2fe', '#1d4ed8', 6, '6 4');
+  [[400, 48, 400, 68], [400, 110, 400, 130], [400, 184, 400, 204], [300, 258, 140, 280], [400, 258, 400, 280], [500, 258, 660, 280], [135, 352, 135, 374]].forEach(([a, b, c, d]) => A(s, `M${a},${b} L${c},${d}`, 'k', 2));
+}
+
+/* ---------- CONTENT ---------- */
+const CH = [
+  { name: 'The cells', steps: [
+    { t: 'The sun heats Earth unevenly', d: s => cellsScene(s, 0),
+      b: `<p>The equator gets the <b>most direct</b> sunlight, so it's hottest. Near the poles, sunlight comes in at a low angle and spreads out, so it's coldest.</p><p>Hot air near the equator gets lighter and <b>rises</b> (the orange dots). That's <b>convection</b>, like boiling water in a pot.</p><p class="small muted">This is a side view: the equator on the left, the North Pole on the right, the ground at the bottom.</p>`,
+      slide: '1. Weather is driven by temperature differences caused by differential heating of the Earth\n2. Temperature differences cause convection which creates high and low pressure areas in the atmosphere' },
+    { t: 'The Hadley cell', d: s => cellsScene(s, 1),
+      b: `<p>Follow one orange dot around the loop:</p><ol><li>It <b>rises</b> at the equator, cools, and its water condenses → <b>rain</b> (rainforests).</li><li>It hits the top of the troposphere, can't go higher, and spreads toward the pole.</li><li>Now dry, it <b>sinks at 30°</b>. Sinking air gets squeezed and warms → no clouds → <b>deserts</b>.</li><li>Along the ground, it flows back to the equator. That surface wind is the <b>trade winds</b>.</li></ol>` },
+    { t: 'Three cells, like gears', d: s => cellsScene(s, 2),
+      b: `<p>The same thing happens twice more on the way to the pole:</p><p><b>Polar cell (60–90°):</b> freezing air <b>sinks at the pole</b>, slides along the ground toward 60°, and <b>rises at 60°</b>.</p><p><b>Ferrel cell (30–60°):</b> it's squeezed between the other two and turns the <b>opposite way</b>, like a middle gear. It sinks at 30° (with the Hadley cell) and rises at 60° (with the polar cell).</p><p>Watch the green dots along the ground: they move <b>toward the pole</b>, while the other two cells move toward the equator. That's why the westerlies are the odd wind out.</p>` },
+    { t: 'Rise, sink, rise, sink', d: s => cellsScene(s, 3),
+      b: `<div class="key">0° rises (LOW, wet) · 30° sinks (HIGH, dry) · 60° rises (LOW, wet) · 90° sinks (HIGH, dry)</div><p>Rising air = <b>low pressure</b> = clouds and rain. Sinking air = <b>high pressure</b> = clear and dry. That one rule decides where the biomes are.</p><p>This side view only shows air moving north–south. Real surface winds also blow east or west. That's the next chapter.</p>`,
+      q: { q: 'The Sahara (about 25°N) and the Amazon (about 0°) both get intense sunlight. Which best explains why the Sahara is a desert?',
+        o: ['The air over the Sahara is sinking air that already lost its moisture over the equator, and it warms as it is compressed',
+            'The Sahara receives less solar radiation than the Amazon, so less water evaporates there',
+            'Air over the Sahara rises and cools, which prevents water vapor from condensing',
+            'The trade winds carry moist air away from the Sahara toward the North Pole'],
+        why: 'The Sahara actually gets MORE sunlight at the ground (no clouds). It sits under the sinking branch of the Hadley cell. C is backwards (rising air cools and DOES condense), and the trade winds blow toward the equator, not the pole.' } },
+  ]},
+  { name: 'Winds & Coriolis', steps: [
+    { t: 'Without spin, wind would blow straight', d: s => windScene(s, 0),
+      b: `<p>This is a <b>map view</b> now (north is up). At the surface, air always flows <b>from high pressure (sinking air) toward low pressure (rising air)</b>.</p><p>If Earth didn't spin, the winds would blow straight north or south, like the dashed arrows.</p>`,
+      slide: '3. Winds blow to correct imbalances in atmospheric pressure and redistribute the sun\'s energy' },
+    { t: 'Earth spins: the Coriolis effect', d: s => windScene(s, 1),
+      b: `<p>Earth spins toward the east, and the ground at the equator moves fastest (about 1,670 km/h). Air moving across the spinning planet gets <b>deflected</b>.</p><div class="key">Northern Hemisphere: moving air curves to its RIGHT.</div><p>Trick: <b>face where the air is going, then turn right.</b></p><ul><li>Hadley surface air heads <b>south</b> → curves <b>west</b> → comes from the <b>northeast</b> = <b>NE trade winds</b></li><li>Ferrel surface air heads <b>north</b> → curves <b>east</b> → comes from the <b>west</b> = <b>westerlies</b></li><li>Polar surface air heads <b>south</b> → curves <b>west</b> → comes from the <b>east</b> = <b>polar easterlies</b></li></ul><p>Winds are named for where they come <b>from</b>.</p>` },
+    { t: 'The Southern Hemisphere is a mirror', d: s => windScene(s, 2),
+      b: `<p>South of the equator, moving air curves to its <b>left</b>, so the picture flips top-to-bottom: <b>SE trade winds</b>, westerlies, polar easterlies.</p><p>The NE and SE trade winds blow <b>toward each other</b> and meet at the equator: the <b>ITCZ</b> (Intertropical <b>Convergence</b> Zone). The air piles up and can only go <b>up</b>, which makes it the rainiest belt on Earth.</p><div class="key">From the equator to either pole: East, West, East.</div>`,
+      q: { q: 'A weather balloon released near the ground at 45°S drifts with the surface wind for a week. Which way does it most likely travel?',
+        o: ['Generally eastward, because it is in the westerlies',
+            'Generally westward, because the Southern Hemisphere deflects air to the left',
+            'Toward the equator, because surface air always flows toward the ITCZ',
+            'Generally westward, because it is in the southeast trade winds'],
+        why: '45°S is in the 30–60° band (Ferrel cell) in both hemispheres, so the surface wind is the westerlies, which blow FROM the west TOWARD the east. The SE trades are only between 0° and 30°S.' } },
+  ]},
+  { name: 'Two kinds of spin', steps: [
+    { t: 'Air rushes into a low', d: s => spinScene(s, 0),
+      b: `<p>This is the confusing part of your slides, so let's sort it out.</p><p>A <b>low-pressure system</b> (like a hurricane) has rising air in the middle. Air at the surface rushes <b>inward</b> from every side to replace it, like the dashed arrows.</p>` },
+    { t: 'Every stream curves right → the storm spins counterclockwise', d: s => spinScene(s, 1),
+      b: `<p>As each stream of air moves in, it curves to its <b>right</b>. Air from the south bends east, air from the east bends north, air from the north bends west... Put them together and the whole storm spins <b>counterclockwise</b>.</p><div class="key">“Curves right” and “counterclockwise” are the SAME rule. One describes a single gust of wind; the other describes the whole storm.</div>`,
+      slide: '5. Coriolis effect ⇨ deflection of wind and water by the rotation of the Earth\na. Counterclockwise in the n. hemisphere\nb. Clockwise in the s. hemisphere' },
+    { t: 'Gyres go the other way', d: s => spinScene(s, 2),
+      b: `<p>An ocean gyre isn't water rushing into a low. It's water <b>shoved by two wind belts</b>: the trade winds push the bottom of the ocean basin <b>west</b>, the westerlies push the top <b>east</b>, and the continents turn it around at the ends.</p><p>West along the bottom, east along the top = <b>clockwise</b>. That's why your slide says gyres are the “opposite of Coriolis effect!”</p>`,
+      slide: 'Gyres ⇨ clockwise in the n. hemisphere and counterclockwise in the s. hemisphere (opposite of Coriolis effect!)' },
+    { t: 'The cheat table', d: s => spinScene(s, 3),
+      b: `<table class="cmp"><tr><th></th><th>Storms / lows (hurricanes)</th><th>Ocean gyres</th></tr><tr><th>Northern Hemisphere</th><td>Counterclockwise</td><td>Clockwise</td></tr><tr><th>Southern Hemisphere</th><td>Clockwise</td><td>Counterclockwise</td></tr></table><p><b>About the toilet video:</b> a normal toilet or sink is far too small for the Coriolis effect to matter. The shape of the bowl and the way the water enters decide the swirl. Coriolis only wins for huge things like storms and oceans.</p>`,
+      q: { q: 'Your slide says the Coriolis effect is “counterclockwise in the n. hemisphere.” Which of these rotates counterclockwise?',
+        o: ['A hurricane approaching Florida', 'The North Atlantic gyre', 'A tropical cyclone approaching northern Australia', 'The North Pacific gyre'],
+        why: 'Florida is in the Northern Hemisphere, and a hurricane is a low, so it spins counterclockwise. Northern gyres spin clockwise (“opposite of Coriolis”). Australia is in the Southern Hemisphere, so its cyclones spin clockwise.' } },
+  ]},
+  { name: 'Hurricanes', steps: [
+    { t: 'A hurricane is a giant low', d: hurrTop,
+      b: `<p>From above, a hurricane is exactly the spiral from the last chapter: air rushing into a <b>low-pressure</b> center and spinning <b>counterclockwise</b> (Northern Hemisphere).</p><ul><li><b>Eye:</b> the calm, clear center, where air sinks.</li><li><b>Eyewall:</b> the ring around the eye with the strongest winds and heaviest rain.</li></ul>`,
+      slide: 'D. Hurricanes\n1. Caused by low pressure systems ⇨ driven by heat from the ocean' },
+    { t: 'The engine: heat from the ocean', d: hurrSide,
+      b: `<p>This is a side view cut through the middle of the storm.</p><ol><li><b>Warm ocean water</b> (at least about 26.5 °C / 80 °F) evaporates into the air.</li><li>That warm, moist air spirals in and <b>rises</b> in the eyewall.</li><li>As it rises, it cools and the water vapor <b>condenses</b>. Condensing releases <b>heat</b>, so the air rises even faster.</li><li>Faster rising → <b>lower pressure</b> in the center → more air rushes in. That's a <b>positive feedback loop</b>.</li></ol><p>Cut off the warm water (the storm moves over land or cold water) and the engine dies.</p>` },
+    { t: 'Where they form and where they go', d: hurrMap,
+      b: `<ul><li>They form over warm tropical water about <b>5–20°</b> from the equator.</li><li>Almost never <b>right at the equator</b>: the Coriolis effect is about zero there, so nothing starts the spin.</li><li>The <b>trade winds</b> push them <b>west</b>, toward the Caribbean and the US.</li><li>Around 30°, they curve north and the <b>westerlies</b> push them <b>northeast</b>.</li></ul><p>That's the classic curved hurricane track, and it's just the wind belts from chapter 2.</p>`,
+      q: { q: 'The ocean right at the equator is very warm, yet hurricanes almost never form within about 5° of it. Why?',
+        o: ['The Coriolis effect is nearly zero at the equator, so the inflowing air cannot begin to rotate',
+            'The water at the equator is too cold to provide energy',
+            'Air sinks at the equator, which creates high pressure',
+            'The trade winds are strongest exactly at the equator and tear storms apart'],
+        why: 'The equator has warm water and rising air (the ITCZ), so B and C are wrong. What it lacks is spin: the Coriolis deflection is zero at the equator and grows toward the poles.' } },
+    { t: 'Hurricanes and climate change', d: hurrSide,
+      b: `<p>Warmer oceans = more evaporation = <b>more fuel</b>. That doesn't necessarily mean more hurricanes in total, but it makes the <b>strongest</b> ones more common.</p>`,
+      slide: '2. Number of category 4 and 5 hurricanes is increasing as climate change warms the oceans',
+      q: { q: 'A hurricane moves from the warm Gulf of Mexico onto land in Texas and quickly weakens. Which best explains this?',
+        o: ['It loses its supply of warm, moist air, so less condensation releases heat to power the rising air',
+            'The Coriolis effect is stronger over land, which stops the rotation',
+            'Air over land is at higher pressure, which pushes the storm back out to sea',
+            'Land is warmer than water, which causes the eye to fill with rising air'],
+        why: 'The fuel is the latent heat released when water vapor from the warm ocean condenses. Over land there is no warm water to evaporate, so the engine runs out of fuel. The Coriolis effect depends on latitude, not on land vs. water.' } },
+  ]},
+  { name: 'Gyres & currents', steps: [
+    { t: 'The wind drags the ocean', d: s => gyreScene(s, 0),
+      b: `<p>When wind blows over water, <b>friction</b> drags the top layer along with it, like blowing across hot cocoa.</p><p>This is a map of the North Atlantic. Two wind belts do the dragging: the <b>trade winds</b> near the equator (from the east) and the <b>westerlies</b> farther north (from the west).</p>` },
+    { t: 'Two flows, opposite directions', d: s => gyreScene(s, 1),
+      b: `<p>The trade winds push the southern part of the ocean <b>west</b>. The westerlies push the northern part <b>east</b>.</p><p>But each flow runs straight into a continent. Where can the water go?</p>` },
+    { t: 'The continents turn it into a loop', d: s => gyreScene(s, 2),
+      b: `<p>The water hits North America and turns <b>north</b>. It hits Europe/Africa and turns <b>south</b>. The result is one giant loop filling the whole ocean basin: a <b>gyre</b>.</p><div class="key">Northern Hemisphere gyres turn CLOCKWISE.</div>` },
+    { t: 'Warm side, cold side', d: s => gyreScene(s, 3),
+      b: `<p>Watch the dot colors:</p><ul><li>On the <b>west side</b> of the ocean (the <b>east coast</b> of North America), the water flows <b>north out of the tropics</b>, so it's <b>warm</b>. That's the <b>Gulf Stream</b>.</li><li>On the <b>east side</b> of the ocean (the <b>west coast</b> of Europe/Africa), it flows <b>south from the cold north</b>, so it's <b>cold</b>. That's the Canary Current.</li></ul><p>Along those west coasts, winds and Earth's spin also push surface water away from shore, so cold deep water <b>upwells</b> → nutrients → big fisheries.</p><p>Same pattern in the Pacific: the cold <b>California Current</b> runs down your coast in Washington.</p>`,
+      slide: '2. Cold water from the poles moves along the west coasts of continents ⇨ cools adjacent land mass\n3. Warm water from the equator moves along the east coasts of continents ⇨ warms adjacent land mass\n4. Upwellings occur along west coasts of most continents ⇨ result in increased nutrients and fish populations' },
+    { t: 'The Southern Hemisphere mirror', d: s => gyreScene(s, 4),
+      b: `<p>South of the equator, the gyres turn <b>counterclockwise</b>, but the coast rule stays the same: <b>east coasts warm, west coasts cold</b>.</p><p>The cold current on South America's west coast in the Pacific (the <b>Peru Current</b>) has huge upwelling. That's the fishery El Niño shuts down, in the next chapter.</p>`,
+      q: { q: 'City P is on the west coast of a continent at 35°S, next to a cold current. City Q is at 35°S on the east coast of the same continent. Compared with Q, city P most likely has...',
+        o: ['cooler, drier weather, because the cold current cools the air above it so the air does not rise',
+            'warmer, wetter weather, because its current carries water from the equator',
+            'cooler, wetter weather, because cold water evaporates faster than warm water',
+            'the same climate, because cities at the same latitude get the same sunlight'],
+        why: 'West coasts get cold currents flowing from the poles. Cold water chills the air, which makes it stable (it does not rise), so there is little rain. That is why coastal deserts like the Atacama and Namib sit next to cold currents. Cold water evaporates SLOWER, not faster.' } },
+  ]},
+  { name: 'El Niño', steps: [
+    { t: 'A normal year', d: s => { ensoMode = 'normal'; ensoScene(s); },
+      b: `<p>This is a side view along the equator across the Pacific.</p><ol><li>The <b>trade winds</b> blow from east to west and drag warm surface water <b>west</b>.</li><li>Warm water <b>piles up</b> near Indonesia and Australia: a thick warm layer, with sea level about ½ m higher.</li><li>Near Peru, the warm water has been pushed away, so <b>cold, nutrient-rich water rises</b> to replace it (<b>upwelling</b>) → a huge anchovy fishery.</li><li>Air over the warm west <b>rises → rain</b>. Air over the cold east <b>sinks → dry</b>. That air loop drives the trade winds, so the system keeps itself going.</li></ol><p>The dashed line is the <b>thermocline</b>, the boundary between the warm top layer and the cold deep water.</p>`,
+      fx: 'normal' },
+    { t: 'El Niño', d: s => { ensoMode = 'nino'; ensoScene(s); },
+      b: `<p>Every 2–7 years, the <b>trade winds weaken</b> (and sometimes even reverse).</p><ol><li>Nothing holds the warm water in the west anymore, so it <b>sloshes east</b> toward Peru.</li><li>The warm layer off Peru gets <b>thick</b>. The thermocline is pushed deep, so upwelling only brings up warm, nutrient-poor water → <b>fisheries crash</b>.</li><li>The rain follows the warm water: air <b>rises over Peru → flooding</b>, and air sinks over the west → <b>drought in Australia and Indonesia</b>.</li></ol>`,
+      slide: 'F. ENSO\n1. A periodic weakening of the Trade Winds ⇨ results in a warming of the Pacific Ocean off the coast of Peru\n2. Changes weather patterns around the globe: a. Warm, dry winters in the northwestern U.S.  b. Cool, wet winters in the southwestern U.S.  c. Flooding in Peru  d. Drought in Australia and Indonesia',
+      fx: 'nino' },
+    { t: 'La Niña', d: s => { ensoMode = 'nina'; ensoScene(s); },
+      b: `<p>The opposite: the trade winds blow <b>stronger than normal</b>. Everything in a normal year gets exaggerated: even more warm water and rain in the west, even <b>more upwelling</b> and fish off Peru, and <b>cold, wet winters</b> in the Pacific Northwest.</p>`,
+      fx: 'nina' },
+    { t: 'Compare all three', d: s => ensoScene(s),
+      b: `<p>Switch between them and watch four things change: the trade winds, the thermocline, the upwelling, and where the rain falls.</p><div class="mbtns"><button class="btn" data-m="normal">Normal</button><button class="btn" data-m="nino">El Niño</button><button class="btn" data-m="nina">La Niña</button></div>`,
+      slide: 'Slide 19: since the “climatic shift of 1976-77,” El Niño episodes have been more frequent and persistent than the cooler La Niñas. It is unclear if this change is related to global climate change.',
+      fx: 'live',
+      q: { q: 'During an El Niño year, a scientist off Peru measures the thermocline. Compared with a normal year, she most likely finds that...',
+        o: ['the thermocline is deeper, so upwelling brings up warm, nutrient-poor water',
+            'the thermocline is shallower, so more nutrients reach the surface',
+            'the thermocline is deeper because the trade winds are stronger than normal',
+            'the thermocline is unchanged, but the surface water is saltier'],
+        why: 'Weak trade winds let warm water slosh east and pile up off Peru, pushing the thermocline DOWN. Upwelling then only reaches warm, nutrient-poor water. C has the right depth but the wrong cause: stronger trade winds is La Niña.' } },
+  ]},
+  { name: 'Thermohaline', steps: [
+    { t: 'What makes water sink', d: densityScene,
+      b: `<p><b>Thermo</b> = temperature, <b>haline</b> = salt. These two things decide how dense (heavy) seawater is:</p><div class="key">Colder = denser. Saltier = denser. Dense water SINKS.</div><p>The coldest, saltiest water in the ocean sinks all the way to the bottom. Near Greenland, forming sea ice leaves its salt behind in the water, so the water there is extra cold <b>and</b> extra salty.</p>` },
+    { t: 'The Great Conveyor Belt', d: s => { melted = false; conveyorScene(s, 1); },
+      b: `<p>That sinking water drives a slow loop through every ocean:</p><ol><li><b>Sinks</b> in the North Atlantic (cold + salty)</li><li>Flows along the deep ocean floor south to Antarctica, then into the Indian and Pacific Oceans</li><li>Slowly warms and <b>rises</b> near the equator</li><li>Returns at the surface to the North Atlantic, where it cools, sinks, and repeats</li></ol><p>One trip takes about <b>1,000 years</b>. Unlike gyres, it's driven by <b>density</b>, not wind.</p><p class="small muted">This is a simplified loop, not a real map.</p>`,
+      slide: '5. Thermohaline circulation ⇨ results from cold salty water sinking at high latitudes and warm water rising near the equator (aka: The Great Conveyor Belt)' },
+    { t: 'Why it matters', d: s => { melted = false; conveyorScene(s, 2); },
+      b: `<ul><li><b>Moves heat:</b> warm surface water (including the Gulf Stream) carries heat north, so England is mild even though it's farther north than most of Canada.</li><li><b>Moves oxygen down</b> into the deep ocean when water sinks.</li><li><b>Moves nutrients up</b> when deep water rises.</li></ul>`,
+      slide: 'a. Ex: Gulf Stream warms England, while Newfoundland is cooled by North Atlantic current' },
+    { t: 'What if Greenland melts?', d: s => conveyorScene(s, 2),
+      b: `<p>Press the button. Melting Greenland ice pours <b>fresh</b> water into the North Atlantic:</p><div class="key">fresher → less dense → less sinking → conveyor slows → less warm water pulled north → Europe gets COLDER</div><p>Think of the sinking as a bathtub drain that pulls warm water north. Clog the drain, and the warm water stops coming.</p><button class="btn primary" id="melt">Melt Greenland's ice</button>`,
+      slide: 'b. Global climate change could shut down the circulation', melt: true },
+    { t: 'Surface currents vs. thermohaline', d: s => { melted = false; conveyorScene(s, 2); },
+      b: `<table class="cmp"><tr><th></th><th>Surface currents (gyres)</th><th>Thermohaline</th></tr><tr><th>Driven by</th><td>Wind</td><td>Density (temperature + salt)</td></tr><tr><th>Where</th><td>Top few hundred meters</td><td>Top to bottom, the deep ocean</td></tr><tr><th>Size</th><td>One ocean basin</td><td>The whole planet</td></tr><tr><th>Speed</th><td>Fairly fast</td><td>Very slow (~1,000 years)</td></tr></table>`,
+      q: { q: 'Which change would most likely STRENGTHEN the sinking of water in the North Atlantic?',
+        o: ['More sea ice forming, which leaves salt behind in the surrounding water',
+            'Faster melting of the Greenland ice sheet',
+            'More rainfall over the North Atlantic',
+            'Warmer surface water temperatures in the North Atlantic'],
+        why: 'Sinking needs dense water: cold and salty. Forming sea ice removes fresh water and leaves the salt behind, so the water gets saltier and denser. Meltwater and rain add fresh water (less dense), and warming makes water less dense too.' } },
+  ]},
+  { name: 'Big picture', steps: [
+    { t: 'Everything connects', d: bigScene,
+      b: `<p>Almost everything in the first half of the PowerPoint comes from <b>one starting point: the sun heats the equator more than the poles.</b> Tap any box to jump to that chapter.</p><p>The only separate engine is the thermohaline circulation, which runs on <b>density</b> instead of wind.</p>`,
+      q: { q: 'Which sequence correctly links a cause to its effects?',
+        o: ['Weaker trade winds → less upwelling off Peru → fewer anchovies',
+            'Stronger westerlies → more upwelling off Peru → more anchovies',
+            'Melting Greenland ice → saltier North Atlantic → faster conveyor belt',
+            'Sinking air at 30° → low pressure → tropical rainforests'],
+        why: 'B uses the wrong wind (the trades control Peru). C is backwards: meltwater makes the water FRESHER and slows the conveyor. D is backwards too: sinking air makes HIGH pressure and deserts.' } },
+  ]},
+];
+
+/* ---------- UI ---------- */
+let st = { c: 0, s: 0 };
+try { Object.assign(st, JSON.parse(localStorage.scCirc || '{}')); } catch {}
+if (!CH[st.c] || !CH[st.c].steps[st.s]) st = { c: 0, s: 0 };
+const seen = new Set(JSON.parse(localStorage.scCircSeen || '[]'));
+
+function hash(s) { let h = 2166136261; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; }
+function order(q) { const idx = q.o.map((_, i) => i); let h = hash(q.q); for (let i = idx.length - 1; i > 0; i--) { h = Math.imul(h, 1103515245) + 12345 >>> 0; const j = h % (i + 1); [idx[i], idx[j]] = [idx[j], idx[i]]; } return idx; }
+
+function drawScene() { const step = CH[st.c].steps[st.s]; step.d(newSvg()); }
+function render() {
+  const ch = CH[st.c], step = ch.steps[st.s];
+  localStorage.scCirc = JSON.stringify(st);
+  if (st.s === ch.steps.length - 1) { seen.add(st.c); localStorage.scCircSeen = JSON.stringify([...seen]); }
+  document.getElementById('chap').innerHTML = CH.map((c, i) => `<button class="${i === st.c ? 'on' : ''} ${seen.has(i) ? 'done' : ''}" data-c="${i}">${i + 1}. ${c.name}</button>`).join('');
+  let html = `<div class="small muted">Chapter ${st.c + 1} of ${CH.length}: ${ch.name} · step ${st.s + 1} of ${ch.steps.length}</div><h2>${step.t}</h2>${step.b}`;
+  if (step.fx) html += `<div class="fx" id="fx"></div>`;
+  if (step.slide) html += `<div class="slide"><b>Your slide:</b>\n${step.slide}</div>`;
+  if (step.q) {
+    html += `<div class="ck"><div class="small muted" style="font-weight:700">CHECK YOURSELF (AP-style)</div><div class="qq">${step.q.q}</div>` +
+      order(step.q).map((i, k) => `<button class="ckopt" data-i="${i}">${'ABCD'[k]}. ${step.q.o[i]}</button>`).join('') + `<div class="ckfb" id="ckfb"></div></div>`;
+  }
+  const body = document.getElementById('body');
+  body.innerHTML = html;
+  drawScene();
+  const setFx = () => { const el = document.getElementById('fx'); if (el) el.innerHTML = FX[step.fx === 'live' ? ensoMode : step.fx]; };
+  setFx();
+  body.querySelectorAll('[data-m]').forEach(b => {
+    b.classList.toggle('on', b.dataset.m === ensoMode);
+    b.onclick = () => { ensoMode = b.dataset.m; body.querySelectorAll('[data-m]').forEach(x => x.classList.toggle('on', x === b)); drawScene(); setFx(); };
+  });
+  const melt = document.getElementById('melt');
+  if (melt) {
+    melted = false; drawScene();
+    melt.onclick = () => { melted = !melted; melt.textContent = melted ? 'Refreeze (reset)' : "Melt Greenland's ice"; drawScene(); };
+  }
+  body.querySelectorAll('.ckopt').forEach(b => b.onclick = () => {
+    const right = +b.dataset.i === 0;
+    body.querySelectorAll('.ckopt').forEach(x => { if (+x.dataset.i === 0) x.classList.add('ok'); x.disabled = true; });
+    if (!right) b.classList.add('bad');
+    document.getElementById('ckfb').innerHTML = (right ? '<b style="color:var(--ok)">Correct.</b> ' : '<b style="color:var(--bad)">Not quite.</b> ') + step.q.why;
+  });
+  document.getElementById('dots').innerHTML = ch.steps.map((_, i) => `<i class="${i === st.s ? 'on' : ''}"></i>`).join('');
+  document.getElementById('back').disabled = st.c === 0 && st.s === 0;
+  const lastStep = st.s === ch.steps.length - 1;
+  document.getElementById('next').textContent = lastStep ? (st.c < CH.length - 1 ? 'Next chapter →' : 'Done ✓') : 'Next →';
+  document.getElementById('next').disabled = lastStep && st.c === CH.length - 1;
+}
+function go(c, s) { st = { c, s }; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+document.getElementById('chap').onclick = e => { const b = e.target.closest('[data-c]'); if (b) go(+b.dataset.c, 0); };
+document.getElementById('next').onclick = () => { const ch = CH[st.c]; if (st.s < ch.steps.length - 1) go(st.c, st.s + 1); else if (st.c < CH.length - 1) go(st.c + 1, 0); };
+document.getElementById('back').onclick = () => { if (st.s > 0) go(st.c, st.s - 1); else if (st.c > 0) go(st.c - 1, CH[st.c - 1].steps.length - 1); };
+document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT') return; if (e.key === 'ArrowRight') document.getElementById('next').click(); if (e.key === 'ArrowLeft') document.getElementById('back').click(); });
+if (localStorage.scTheme === 'dark') document.body.classList.add('dark');
+document.getElementById('theme').onclick = () => { const d = document.body.classList.toggle('dark'); localStorage.scTheme = d ? 'dark' : 'light'; };
+render();
+</script>
+</body>
+</html>
