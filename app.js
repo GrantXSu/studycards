@@ -263,7 +263,10 @@ async function seedSets() {
     if (rev === undefined) {
       if (!cur) await saveSet({ ...clone(s), created: Date.now() });
       meta.ids[s.id] = s.rev;
-    } else if (rev < s.rev && cur && !cur.edited) {
+    } else if (rev < s.rev && !cur) {
+      await saveSet({ ...clone(s), created: Date.now() });
+      meta.ids[s.id] = s.rev;
+    } else if (rev < s.rev && !cur.edited) {
       await saveSet({ ...cur, ...clone(s) });
       meta.ids[s.id] = s.rev;
     }
