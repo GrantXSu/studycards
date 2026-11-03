@@ -1,3 +1,5 @@
 .DS_Store
 seed.js.bak-*
 _*.html
+seed-local.js
+seed/img/bio-u3-*
